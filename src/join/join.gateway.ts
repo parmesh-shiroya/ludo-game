@@ -1,8 +1,11 @@
-import {Logger} from '@nestjs/common';
+import {Logger, UseGuards} from '@nestjs/common';
 import {OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer} from '@nestjs/websockets';
 import {Socket, Server} from 'socket.io'
-import {NSocket} from "../interfaces/interfaces"
-
+import {v4 as uuidv4} from 'uuid'
+import {NSocket} from "../shared/interfaces/interfaces"
+import {RedisClientService} from 'src/redis-client/redis-client.service';
+import {WSAuthGuard} from "../shared/wsauth.gaurd"
+import {ROOM_TYPE, ROOM_FEE_TYPE} from "../shared/constants"
 
 
 @WebSocketGateway()
@@ -10,23 +13,35 @@ export class JoinGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
   @WebSocketServer() wss: Server;
 
+  constructor(private redisClient: RedisClientService) {}
+
+
   private logger: Logger = new Logger("JoinGateway")
 
   afterInit(server: any) {
     this.logger.log("Initialized")
+    this.redisClient.setValue("nameqweqwewe", "valuqwee").catch(console.error);
   }
 
   handleConnection(client: Socket, ...args: any[]) {
     this.logger.log(args)
   }
 
+  @UseGuards(WSAuthGuard)
   @SubscribeMessage('join')
-  handleMessage(client: NSocket, payload: {roomName: string}): string {
+  async handleMessage(client: NSocket, payload: {roomType: ROOM_TYPE, roomFeeType: ROOM_FEE_TYPE}): Promise<string> {
 
-    client.join(payload.roomName)
-    client.roomId = payload.roomName;
+    // find the room from `pending_{roomType}_entryFee
+    let roomId = await this.redisClient.getFromHash(`PENDING_${payload.roomType}`, payload.roomFeeType)
+    // If not exist create room and save it in redis and run OnRoomCreateInterval for that room
+    if (!roomId) {
+      roomId = uuidv4()
+      this.redisClient.addInHash(`PENDING_${payload.roomType}`, payload.roomFeeType, roomId)
+    }
+
     console.log("join")
-    return ""
+    console.log(await this.redisClient.getValue("namewe"))
+    return await this.redisClient.getValue("name")
   }
 
 
