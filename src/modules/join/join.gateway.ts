@@ -13,7 +13,7 @@ export class JoinGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
   @WebSocketServer() wss: Server;
 
-  constructor(private redisClient: RedisClientService) {}
+  constructor(private redisClient: RedisClientService) { }
 
 
   private logger: Logger = new Logger("JoinGateway")
