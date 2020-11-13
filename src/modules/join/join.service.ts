@@ -1,5 +1,6 @@
 import {Injectable} from '@nestjs/common';
-import {RedisClientService} from 'src/redis-client/redis-client.service';
+import {RedisClientService} from '../redis-client/redis-client.service';
+
 
 @Injectable()
 export class JoinService {

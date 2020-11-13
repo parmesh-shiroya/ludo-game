@@ -2,9 +2,10 @@ import {Module} from '@nestjs/common';
 import {RedisModule} from 'nestjs-redis'
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
-import {JoinModule} from './join/join.module';
-import {RedisClientModule} from './redis-client/redis-client.module';
-import {LoginModule} from './login/login.module';
+import {JoinModule} from './modules/join/join.module';
+import {LoginModule} from './modules/login/login.module';
+import {RedisClientModule} from './modules/redis-client/redis-client.module';
+
 
 
 @Module({

@@ -1,7 +1,8 @@
 import {SubscribeMessage, WebSocketGateway} from '@nestjs/websockets';
 import * as jwt from 'jsonwebtoken';
+import {LOGIN_TYPE} from 'src/shared/constants';
 import {v4 as uuidv4} from 'uuid'
-import {LOGIN_TYPE} from "../shared/constants"
+
 
 @WebSocketGateway()
 export class LoginGateway {

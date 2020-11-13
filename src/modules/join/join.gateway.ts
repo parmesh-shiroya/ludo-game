@@ -1,11 +1,12 @@
 import {Logger, UseGuards} from '@nestjs/common';
 import {OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer} from '@nestjs/websockets';
 import {Socket, Server} from 'socket.io'
+import {ROOM_FEE_TYPE, ROOM_TYPE} from 'src/shared/constants';
+import {WSAuthGuard} from 'src/shared/wsauth.gaurd';
 import {v4 as uuidv4} from 'uuid'
-import {NSocket} from "../shared/interfaces/interfaces"
-import {RedisClientService} from 'src/redis-client/redis-client.service';
-import {WSAuthGuard} from "../shared/wsauth.gaurd"
-import {ROOM_TYPE, ROOM_FEE_TYPE} from "../shared/constants"
+import {NSocket} from "../../shared/interfaces/interfaces"
+import {RedisClientService} from '../redis-client/redis-client.service';
+import {JoinService} from './join.service';
 
 
 @WebSocketGateway()
@@ -13,14 +14,13 @@ export class JoinGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
   @WebSocketServer() wss: Server;
 
-  constructor(private redisClient: RedisClientService) { }
+  constructor(private readonly redisClient: RedisClientService, private readonly joinService: JoinService) { }
 
 
   private logger: Logger = new Logger("JoinGateway")
 
   afterInit(server: any) {
     this.logger.log("Initialized")
-    this.redisClient.setValue("nameqweqwewe", "valuqwee").catch(console.error);
   }
 
   handleConnection(client: Socket, ...args: any[]) {
@@ -39,8 +39,6 @@ export class JoinGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
       this.redisClient.addInHash(`PENDING_${payload.roomType}`, payload.roomFeeType, roomId)
     }
 
-    console.log("join")
-    console.log(await this.redisClient.getValue("namewe"))
     return await this.redisClient.getValue("name")
   }
 
