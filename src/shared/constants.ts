@@ -3,6 +3,11 @@ export enum ROOM_TYPE {
     ONLINE_FOUR = "ONLINE_FOUR"
 }
 
+export const ROOM_SIZE: Record<ROOM_TYPE, number> = {
+    [ROOM_TYPE.ONLINE_TWO]: 2,
+    [ROOM_TYPE.ONLINE_FOUR]: 4,
+}
+
 export enum LOGIN_TYPE {
     GUEST = "GUEST"
 }
@@ -26,4 +31,9 @@ export const ROOM_FEE: Record<ROOM_FEE_TYPE, {fee: number, prize1: number}> = {
         fee: 5000,
         prize1: 9500
     }
+}
+
+export enum PLAYER_STATUS {
+    ONLINE = "ONLINE",
+    OFFLINE = "OFFLINE"
 }

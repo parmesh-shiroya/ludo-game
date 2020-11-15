@@ -5,6 +5,7 @@ import {AppService} from './app.service';
 import {JoinModule} from './modules/join/join.module';
 import {LoginModule} from './modules/login/login.module';
 import {RedisClientModule} from './modules/redis-client/redis-client.module';
+import { GameModule } from './modules/game/game.module';
 
 
 
@@ -18,7 +19,8 @@ import {RedisClientModule} from './modules/redis-client/redis-client.module';
     }),
     JoinModule,
     RedisClientModule,
-    LoginModule
+    LoginModule,
+    GameModule
   ],
   controllers: [AppController],
   providers: [AppService]
