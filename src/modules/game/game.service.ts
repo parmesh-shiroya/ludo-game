@@ -20,7 +20,10 @@ export class GameService {
         for (const userId in players) {
             this.redisClient.createUserPiecePositionData(userId)
         }
-        //Remove money from all users account to inProgress game db.
+
+        this.redisClient.setRoomData(roomId, {currentPlayer})
+
+        //TODO : Remove money from all users account to inProgress game db.
 
     }
 

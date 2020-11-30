@@ -1,0 +1,28 @@
+-> Network Call
+# Logic
+
+Login  
+    - As Guest 
+        - Enter username
+            -> Send username and device id to Login websocket
+                # find user with device Id exist. If yos login him. If not create user with the username and device id as guest user
+                # return jwtToken and with userData
+
+Main screen.
+    -> Get account info like name, Coins, notifications etc...
+        # find the account detail with jwt token and return it.
+
+Playe Game
+    - Select Players size (4 or 2)
+    - Select Game prize.
+        -> Send join to room request
+            # Check any room with same playerSize and same prize exist or not
+                # If yes that join to that room
+                    # Now if is full start Game. 
+                    # Remoce that roomId from pending room List
+                # if no than create room and set that as pending Room
+                    # Start Timer that will force start the game after certain second
+                        # After room Size is not full add robots as other players and startGame
+                        # Remoce that roomId from pending room List
+                # send userdata in room. to let other player know
+                # Send roomData to joined user (Data of other players)

@@ -56,8 +56,18 @@ export class RedisClientService {
     /*
     * END methods for `${roomId}_USERS`
     */
+    /*
+     * All method for `${roomId}_DATA` = {currentPlayerNo, roomCreatedAt, currentPlayStartAt}
+     */
 
+    async setRoomData(roomId: string, data: Record<string, string | number>) {
+        const result = await this._client.hmset(`${roomId}_DATA`, data)
+        return result == 'OK';
+    }
 
+    /*
+    * End method for `${roomId}_DATA` = {currentPlayerNo, roomCreatedAt, currentPlayStartAt}
+    */
     /*
     * All method for `${userId}_DATA` = {roomId, status, playerNo}
     */
