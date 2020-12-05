@@ -26,3 +26,64 @@ Playe Game
                         # Remoce that roomId from pending room List
                 # send userdata in room. to let other player know
                 # Send roomData to joined user (Data of other players)
+
+
+On Game start
+-> Emit that game is start.
+##create function that take currentPlayerNo and return next Player No if currentPlayer not sent reutnr random number beween 0- room size second arg is  room size
+Run interval of 3 second that will trigger function for below logic. it will take who will be the next player no
+Select randomly who will be the first player
+
+emit selectedNo and gameIsStart Event to room.
+start interval for 15 Sec if user doesen't response start bot. and send data to that user that bot is on in his place
+    If user is active
+        -> User click on dice send socket connection 
+            #get random number between 1 - 6
+            # check is any piece is movable with given response.
+                # if only one piece is movable
+                    -> move that piece and save position  amd send to room
+                        # If new position has any opponent pieces
+                            If new position is not safe point. 
+                                Change opponent piece position to zero and send that data to room.
+                                -> setintrval for 1 second line number 34 but with current player number
+                                return;
+                        if new position is last point
+                            -> setintrval for 1 second line number 34 but with current player number
+                            return;
+                    if (number is 6)
+                        -> setintrval for 1 second line number 34 but with current player number
+                        return;
+                    else
+                        -> run interval of 1 second for line no 34        
+                        return;
+
+                # else if more than one movable then send that with event and wait for user to select piece
+                    -> user select peice
+                        # save mew piece position  amd semd to room
+                            # If new position has any opponent pieces
+                                If new position is not safe point. 
+                                    Change opponent piece position to zero and send that data to room.
+                                    -> setintrval for 1 second line number 34 but with current player number
+                                    return;
+                            if new position is last point
+                                -> setintrval for 1 second line number 34 but with current player number
+                                return;
+                        if (number is 6)
+                            -> setintrval for 1 second line number 34 but with current player number
+                            return;
+                        else
+                            -> run interval of 1 second for line no 34        
+                            return;
+                # else if (is number is 6)
+                    -> setintrval for 1 second line number 34 but with current player number
+                    return;
+                else
+                -> Emit number back to the room
+                send that with event and run interval of 1 second for line no 34
+
+
+            
+
+
+
+
