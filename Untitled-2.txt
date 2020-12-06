@@ -1,0 +1,49 @@
+Methods.
+
+startGame(roomId)
+    -> Emit that game is start.
+
+NextPlayerNumber(currentPlayerNo, roomSize)
+    ##create function that take currentPlayerNo and return next Player No if currentPlayer not sent reutnr random number beween 0- room size second arg is  room size
+
+getDiceResult()
+    return random(1-6)
+
+PlayTurn(roomId, turnPlayerNo)
+    -> emit who is the first player in room.
+    start interval for 15 Sec if user doesen't response start bot. and send data to that user that bot is on in his place
+
+rollDice(roomId, playerNo)
+    getDiceResult()
+    setDiceResultToRoom
+    getMovablePieces(userId,moves)
+    sendRolledDiceResult(roomId,playerNo,diceResult,movablePieces)
+    // Sleep for few miliseconds
+    Check if any piece is movable 
+        if only one piece is movalbe
+            movePiece(roomid,playerNo,piece,moves)
+        else
+            SendMovablePieceOptionToUser()
+    else
+        playNextTurn(roomId,currentPlayerNo)
+
+sendRolledDiceResult(roomId,playerNo,diceResult,movablePieces)
+    emit result to room
+
+movePiece(roomid,playerNo,piece,moves)
+    changePiecePosition
+    sendDataToRoom
+    
+
+playNextTurn(roomId,currentPlayerNo)
+    GetDiceResultFromRoom
+    if(diceresult == 6)
+        PlayTurn(roomId, samePlayerNo)
+    else
+        PlayTurn(roomId, NextPlayerNumber(playerNo,roolSize))
+
+        
+getMovablePieces(userId,moves)
+    GetPiecePositionsFromRedis
+    Calculate is pieces ara movable
+    reutnr all movable piece No in array

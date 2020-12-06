@@ -81,6 +81,11 @@ start interval for 15 Sec if user doesen't response start bot. and send data to 
                 -> Emit number back to the room
                 send that with event and run interval of 1 second for line no 34
 
+Bot logic
+
+-> Create bot user
+    create random bot with random user data. Name, location, image.
+
 
             
 
