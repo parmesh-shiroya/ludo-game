@@ -46,11 +46,10 @@ export class JoinGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
       await this.redisClient.createPendingRoom(payload.roomType, payload.roomFeeType, roomId)
       this.joinService.onRoomCreate(this.wss, roomId)
     }
-    await this.redisClient.addUserInRooms(`${roomId}_USERS`, client)
-
     const playersInRoom = await this.redisClient.getUsersLengthOfRoom(roomId)
+    await this.redisClient.addUserInRooms(`${roomId}_USERS`, {userId: client.userId, playerNo: playersInRoom})
     // Set players data in redis
-    await this.redisClient.addUser(client.userId, roomId, PLAYER_STATUS.ONLINE, playersInRoom)
+    await this.redisClient.setUserData(client.userId, {socketId: client.id, name: client.name, roomId, status: PLAYER_STATUS.PLAYING, playerNo: playersInRoom})
     client.join(roomId)
     client.roomId = roomId
 

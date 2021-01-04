@@ -35,5 +35,8 @@ export const ROOM_FEE: Record<ROOM_FEE_TYPE, {fee: number, prize1: number}> = {
 
 export enum PLAYER_STATUS {
     ONLINE = "ONLINE",
+    PLAYING = "PLAYING",
+    ROBOT = "ROBOT",
+    LEAVE = "LEAVE",
     OFFLINE = "OFFLINE"
 }

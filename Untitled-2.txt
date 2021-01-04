@@ -10,6 +10,7 @@ getDiceResult()
     return random(1-6)
 
 PlayTurn(roomId, turnPlayerNo)
+    Store who is current player is redis
     -> emit who is the first player in room.
     start interval for 15 Sec if user doesen't response start bot. and send data to that user that bot is on in his place
 
